@@ -3,6 +3,9 @@
   "description": "DNS server library for node.js",
   "version": "0.0.1",
   "author": "trevoro <trevoro@gmail.com>",
+  "scripts": {
+    "start": "nodemon --exec 'npx babel-node examples/app'"
+  },
   "contributors": [
     "Mark Cavage"
   ],
@@ -19,6 +22,9 @@
     "ipaddr.js": "0.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "nodeunit": "0.9.0"
   },
   "license": "MIT"
