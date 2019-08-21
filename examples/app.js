@@ -1,15 +1,31 @@
 var named = require('../lib');
+import { SOA } from '../lib/records'
 var server = named.createServer();
 
-server.listen(9999, '127.0.0.1', function() {
-  console.log('DNS server started on port 9999');
+const port = process.env.PORT || 53
+
+server.listen(port, '127.0.0.1', function () {
+  console.log('DNS server started on port ', port);
 });
 
-console.log(named.SoaRecord);
 
-server.on('query', function(query) {
-  var domain = query.name();
-  var record = new named.SOARecord(domain, {serial: 12345, ttl: 300});
+server.on('query', function (query) {
+
+
+  console.log("query", query.name())
+  const domain =  query.name()
+
+  var record = new SOA(domain, {serial: 12345, ttl: 300});
   query.addAnswer(domain, record, 300);
-  server.send(query);
+
+  return server.send(query)
+
+});
+
+server.on('clientError', function (error) {
+  console.log("there was a clientError: %s", error);
+});
+
+server.on('uncaughtException', function (error) {
+  console.log("there was an excepton: %s", error);
 });
